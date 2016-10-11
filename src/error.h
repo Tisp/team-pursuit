@@ -7,4 +7,5 @@ enum {
         ARGV_ERR  /* Erro para entrada de argumetnos */
         };
 
+void error(int error);
 #endif

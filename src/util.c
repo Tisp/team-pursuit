@@ -3,6 +3,8 @@
 #include <time.h>
 #include "util.h"
 
+/* Define variavel global para debug */
+int debug = FALSE;
 
 void help(const char *program_name) {
     printf("\n### Team Pursuit Simulator ### \n\n");
