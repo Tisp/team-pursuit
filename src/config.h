@@ -1,3 +1,12 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+File: config.h
+
+Header com as variaveis de configuracao do programa 
+
+*******/
+
+
 #ifndef _CONFIG_H
 #define _CONFIG_H
 

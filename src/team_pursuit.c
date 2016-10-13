@@ -11,6 +11,9 @@
 #include "track.h"
 
 
+/* Define variavel global para debug */
+int debug = FALSE;
+
 int main(int argc, char **argv) {
 
     /* Verifica o numero total de argumentos */
