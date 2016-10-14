@@ -12,7 +12,7 @@
 /* Estrutura de um ciclista */
 typedef struct _cyclist {
     int id; /* id do ciclista*/
-    int team_id; /* ID do time do ciclista */
+    int team_id; /* id do time */
     int speed; /* Sua velocidade */
     int is_break; /* Esta quebrado */
     int position; /* Guarda a posicao */
@@ -21,8 +21,7 @@ typedef struct _cyclist {
 } Cyclist;
 
 /*Cria um novo ciclista com o id da equipe especifica */
-Cyclist *cyclist_new(int team_idm, int speed, int position);
-
+Cyclist *cyclist_new(int id_team, int speed, int position);
 
 /* Destroi um ciclista */
 void cyclista_destroy(Cyclist *cyclist);

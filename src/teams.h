@@ -15,14 +15,15 @@ typedef struct _teams {
     Cyclist **cyclists;
 } Teams;
 
-Teams teams_new(int num_cyclists, int track_distance);
+Teams *teams_new(int num_cyclists, int track_distance);
 
-void teams_destroy(Teams teams);
+void teams_destroy(Teams *teams);
 
-void teams_print(Teams teams);
+void teams_print(Teams *teams);
 
-void teams_change_speed(Teams teams, int id_team, int speed);
+void teams_change_speed(Teams *teams, int id_team, int speed);
 
+int teams_get_last(Teams *teams, int id_team, int track_size);
 
 
 #endif
