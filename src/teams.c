@@ -37,6 +37,17 @@ void teams_destroy(Teams teams) {
 }
 
 
+/* Muda a velocidade de todo o time */
+void teams_change_speed(Teams teams, int id_team, int speed) {
+    int i;
+
+    for(i = 0; i <  teams.total_cyclists; i++) {
+        if(teams.cyclists[i]->team_id == id_team)
+            teams.cyclists[i]->speed = speed;
+    }
+}
+
+/* Printa os dados de todos os ciclistas */
 void teams_print(Teams teams) {
 
     int i;

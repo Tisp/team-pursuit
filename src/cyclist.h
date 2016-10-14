@@ -7,6 +7,7 @@
 #include <math.h>
 
 #include "util.h"
+#include "track.h"
 
 /* Estrutura de um ciclista */
 typedef struct _cyclist {
@@ -15,6 +16,7 @@ typedef struct _cyclist {
     int speed; /* Sua velocidade */
     int is_break; /* Esta quebrado */
     int position; /* Guarda a posicao */
+    int init_position; /*Posicao inicial*/
     pthread_t thread;
 } Cyclist;
 

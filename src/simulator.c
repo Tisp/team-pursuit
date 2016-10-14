@@ -11,12 +11,13 @@
 
 
 int start = FALSE;
+int laps;
+
 
 /* Inicia a simulacao */
 void start_simulation(int track_distance, int num_cyclists) {
 
-
-    int i;
+    int i, j;
 
     /* Cria a pista */
     track_new(track_distance, num_cyclists);
@@ -26,16 +27,21 @@ void start_simulation(int track_distance, int num_cyclists) {
 
     teams_print(teams);
 
+    /* Cria as threds */
     for(i = 0; i < teams.total_cyclists; i++)
         pthread_create(&teams.cyclists[i]->thread, NULL, cyclist_run, (void *) teams.cyclists[i]);
 
-    printf("esperando, jaja inicio as threads\n");
-    start = TRUE;
+    while(laps < MAX_LAPS) {
+       start = TRUE;
+       track_print_positions();
+       printf("Volta: %d \n", laps);
+       
+    }
 
 
-    msleep(5000);
 
-  // teams_destroy(teams);
+
+  teams_destroy(teams);
     
 }
 

@@ -45,19 +45,7 @@ int main(int argc, char **argv) {
         exit(-1);
     }
 
-    int i, j = 0;
-    Timer t_start, t_finish;
-
-    get_time(&t_start);
-
     start_simulation(track_distance, num_cyclists);
 
-    // while(1) {
-    //         msleep(SLEEP);
-    //         get_time(&t_finish);
-
-    //         if(debug)
-    //             printf("%lf\n", diff_time_s(t_finish, t_start));
-    // }
     return 0;
 }

@@ -8,15 +8,22 @@
 #include "config.h"
 #include "util.h"
 
-/* Estrutura do tipo PISTA */
-typedef struct _track {
+
+typedef struct _track_positions {
     /* Guarda as posicoes dos ciclistas no trecho */
     int *stretch;
+
+} TrackPositions;
+
+/* Estrutura do tipo PISTA */
+typedef struct _track {
+    int size;
+    TrackPositions *position;
 } Track;
 
 
 /* Variavel global para pista */
-Track *track;
+Track track;
 
 /* Cria um nova pista */
 void track_new(int track_distance, int num_cyclists);
