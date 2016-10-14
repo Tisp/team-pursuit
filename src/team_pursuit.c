@@ -52,12 +52,12 @@ int main(int argc, char **argv) {
 
     start_simulation(track_distance, num_cyclists);
 
-    while(1) {
-            msleep(SLEEP);
-            get_time(&t_finish);
+    // while(1) {
+    //         msleep(SLEEP);
+    //         get_time(&t_finish);
 
-            if(debug)
-                printf("%lf\n", diff_time_s(t_finish, t_start));
-    }
+    //         if(debug)
+    //             printf("%lf\n", diff_time_s(t_finish, t_start));
+    // }
     return 0;
 }

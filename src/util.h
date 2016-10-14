@@ -1,10 +1,14 @@
 #ifndef _UTIL_H
 #define _UTIL_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
 /* Constantes boleanas  */
 enum {FALSE,TRUE};
 enum {false, true};
-
 
 
 /* Glabais */

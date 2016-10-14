@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
 
-#include "config.h"
-#include "util.h"
 #include "track.h"
 
 
@@ -11,7 +6,7 @@
 /* Cria um nova pista
    Utiliza a variavel global track
 */
-void new_track(int track_distance, int num_cyclists) {
+void track_new(int track_distance, int num_cyclists) {
 
     int i;
 

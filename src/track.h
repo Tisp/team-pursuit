@@ -1,6 +1,12 @@
 #ifndef _TRACK_H
 #define _TRACK_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+#include "config.h"
+#include "util.h"
 
 /* Estrutura do tipo PISTA */
 typedef struct _track {
@@ -13,6 +19,6 @@ typedef struct _track {
 Track *track;
 
 /* Cria um nova pista */
-void new_track(int track_distance, int num_cyclists);
+void track_new(int track_distance, int num_cyclists);
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef _ERROR_H
 #define _ERROR_H
 
+#include <stdio.h>
+#include <stdlib.h>
 
 enum {
         ARGC_ERR, /* Erro para o numero total de argumentos */
