@@ -25,5 +25,8 @@ void teams_change_speed(Teams *teams, int id_team, int speed);
 
 int teams_get_last(Teams *teams, int id_team, int track_size);
 
+int teams_get_position(Teams *teams, int team_id, int cyclist_key);
+
+
 
 #endif

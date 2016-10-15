@@ -49,11 +49,14 @@ int teams_get_last(Teams *teams, int id_team, int track_size) {
     
     int i;
     int last = 0;
-    int p1 = (teams[id_team].cyclists[0]->position +  teams[id_team].total_cyclists) % track_size;
+    int total = teams[id_team].total_cyclists;
+    int p1 = track_size;
 
-    for(i = 1; i < teams[id_team].total_cyclists; i++)  {
-
-        int p2 = (teams[id_team].cyclists[i]->position +  teams[id_team].total_cyclists) % track_size;
+    for(i = 0; i < total; i++)  {
+        
+        if(teams[id_team].cyclists[i]->is_break) continue;
+        
+        int p2 = (teams[id_team].cyclists[i]->position + total) % track_size;
 
         if(p2 < p1) {
             p1 = p2;
@@ -81,14 +84,33 @@ void teams_print(Teams *teams) {
 
     for(i = 0; i < 2; i++) {
         for(j = 0; j <  teams[i].total_cyclists; j++) {
-            printf("Ciclista: %d\n", teams[i].cyclists[j]->id);
-            printf("Time: %d\n", i);
-            printf("Velocidade: %d\n", teams[i].cyclists[j]->speed);
-            printf("Posicao: %d\n", teams[i].cyclists[j]->position);
-            printf("Quebrado: %s\n", teams[i].cyclists[j]->is_break ? "Sim" : "Nao");
-            printf("\n");
+
+            if(!teams[i].cyclists[j]->is_break) {
+
+                printf("Ciclista: %d\n", teams[i].cyclists[j]->id);
+                printf("Time: %d\n", i);
+                printf("Velocidade: %d\n", teams[i].cyclists[j]->speed);
+                printf("Posicao: %d\n", teams_get_position(teams, i, j));
+                printf("\n");
+            }
+
         }
    }
+}
+
+
+int teams_get_position(Teams *teams, int team_id, int cyclist_key) {
+
+    int i = 0;
+    int position = 1;
+    int my_position = teams[team_id].cyclists[cyclist_key]->position;
+
+    for(i = 0; i < teams[team_id].total_cyclists; i++) 
+        if(teams[team_id].cyclists[i]->position > my_position)
+            position++;
+
+
+    return position;
 
 }
 

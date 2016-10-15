@@ -15,4 +15,6 @@ void simulator_start(int track_distance, int num_cyclists);
 
 void simulator_start_running(Teams *teams);
 
+int simulator_break_cyclist(Teams *teams, int team_id);
+
 #endif

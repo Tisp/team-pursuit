@@ -16,8 +16,8 @@ typedef struct _cyclist {
     int speed; /* Sua velocidade */
     int is_break; /* Esta quebrado */
     int position; /* Guarda a posicao */
-    int init_position; /*Posicao inicial*/
-    pthread_t thread;
+    int start_position; /*Posicao inicial*/
+    pthread_t thread; /* thread */
 } Cyclist;
 
 /*Cria um novo ciclista com o id da equipe especifica */
