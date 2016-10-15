@@ -1,4 +1,3 @@
-
 #include "track.h"
 
 
@@ -20,7 +19,6 @@ void track_new(int track_distance, int num_cyclists) {
              track.position[i].stretch[j] = -1;
     }
 }
-
 
 
 void track_print_positions() {

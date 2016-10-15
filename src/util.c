@@ -16,3 +16,10 @@ void help(const char *program_name) {
 void msleep(int ms) {
     usleep(ms * 1000);
 } 
+
+
+
+int randmax(int max) {
+    /* Gera um numero aleatorio de o a max */
+    return rand() % max;
+}

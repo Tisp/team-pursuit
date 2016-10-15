@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
 
-#include "config.h"
-#include "util.h"
-#include "track.h"
-#include "cyclist.h"
-#include "teams.h"
 #include "simulator.h"
 
 
@@ -14,13 +6,12 @@ int start = FALSE;
 
 
 /* Inicia a simulacao */
-void start_simulation(int track_distance, int num_cyclists) {
+void simulator_start(int track_distance, int num_cyclists) {
 
     int i, j;
 
-
+    /* Numero total de voltas de cada equipe*/
     int laps[2] = {0,};
-    
 
     /* Cria a pista */
     track_new(track_distance, num_cyclists);
@@ -36,16 +27,8 @@ void start_simulation(int track_distance, int num_cyclists) {
              pthread_create(&teams[i].cyclists[j]->thread, NULL, cyclist_run, (void *) teams[i].cyclists[j]);
     }
 
-    /* Organiza largada */
-    for(i = 0; i < 2; i++) {
-        int total = teams[i].total_cyclists - 1;
-        for(j = 0; j < teams[i].total_cyclists; j++) {
-            teams[i].cyclists[j]->position += total;
-            total--;
-        }
-    }
 
-    msleep(SLEEP);
+    simulator_start_running(teams);
 
     while(laps[0] != MAX_LAPS && laps[1] != MAX_LAPS) {
        
@@ -67,7 +50,36 @@ void start_simulation(int track_distance, int num_cyclists) {
     }
 
      //teams_destroy(teams);
+}
+
+
+/* Simula a largada, sorteado aleatoriamente quem corre mais */
+void simulator_start_running(Teams *teams) {
     
+    int i, j;
+    
+    /* Organiza largada, sorteado quem ira comecar  */
+    for(i = 0; i < 2; i++) {
+       
+        int total = teams[i].total_cyclists - 1;
+        int raf[total];
+        
+        /* Coloca todos verores de raf como false */
+        for(j = 0; j < total; j++) raf[j] = FALSE;
+        
+        int s = total;
+        
+        while(s > 0) {
+            int r = randmax(total);
+            if(!raf[r]) {
+                 teams[i].cyclists[r]->position += total;
+                 raf[r] = TRUE;
+                 s--;
+            }
+        }
+    }
+
+    msleep(SLEEP);
 }
 
 

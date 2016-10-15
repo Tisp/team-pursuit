@@ -45,7 +45,11 @@ int main(int argc, char **argv) {
         exit(-1);
     }
 
-    start_simulation(track_distance, num_cyclists);
+    /* Gera uma semente para o programa */
+    srand((unsigned)time(NULL));
+
+    /* Inicia a simulacao */
+    simulator_start(track_distance, num_cyclists);
 
     return 0;
 }

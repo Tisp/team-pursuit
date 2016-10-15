@@ -23,4 +23,7 @@ void help(const char *program_name);
 
 void msleep(int ms);
 
+
+int randmax(int max);
+
 #endif
