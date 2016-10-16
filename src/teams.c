@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #include "teams.h"
 
 /**
@@ -41,8 +44,6 @@ void teams_destroy(Teams *teams) {
         for(i = 0; i < teams[j].total_cyclists; i++) 
             free(teams[j].cyclists[i]);
     }
-
-    free(teams);
     
 }
 

@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #ifndef _TEAMS_H
 #define _TEAMS_H
 

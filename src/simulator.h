@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #ifndef _SIMULATOR_H
 #define _SIMULATOR_H
 

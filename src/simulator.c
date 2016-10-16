@@ -1,4 +1,6 @@
-
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #include "simulator.h"
 
 
@@ -128,7 +130,7 @@ void simulator_start(int track_distance, int num_cyclists, int speed_type) {
     }
 
      pthread_mutex_destroy(&mutex);
-     //teams_destroy(teams);
+     teams_destroy(teams);
 }
 
 
@@ -239,7 +241,6 @@ void simulator_update_positions(Teams *teams, int track_size) {
 
     int i, j;
 
-   // pthread_mutex_lock(&mutex);
     for(i = 0; i < 2; i++) {
             for(j = 0; j < teams[i].total_cyclists; j++) {
             int position = teams_get_position(teams, i, j);
@@ -250,6 +251,5 @@ void simulator_update_positions(Teams *teams, int track_size) {
          int last = teams_get_last(teams, i);
          teams[i].cyclists[last]->is_last = TRUE;
     }
-  // pthread_mutex_unlock(&mutex);
 
 }

@@ -1,3 +1,7 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
+
 #ifndef _CYCLIST_H
 #define _CYCLIST_H
 

@@ -1,6 +1,6 @@
 BIN_SIMULADOR = team_pursuit
 SRCS_SIMULADOR = $(wildcard src/*.c) $(wildcard src/*.c)
-
+#Autor: Thiago Ivan Silva Pereira
 INCS = -Isrc/
 LIBS = -ansi -pedantic -O2 -O3 -Wall -lm -lrt -lpthread -pthread 
 

@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #ifndef _TRACK_H
 #define _TRACK_H
 

@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #ifndef _ERROR_H
 #define _ERROR_H
 

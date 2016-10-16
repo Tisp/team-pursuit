@@ -1,4 +1,6 @@
-
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #include "error.h"
 
 void error(int error) {

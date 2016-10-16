@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #include "util.h"
 
 void help(const char *program_name) {

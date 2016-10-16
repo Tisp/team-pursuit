@@ -1,3 +1,7 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
+
 #include "cyclist.h"
 
 /* Variavel global para criacao de ids dos ciclistas */

@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #include <stdio.h>
 #include <stdlib.h>
 

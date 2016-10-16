@@ -1,3 +1,6 @@
+/*******
+Autor: Thiago Ivan Silva Pereira
+*******/
 #ifndef _UTIL_H
 #define _UTIL_H
 
