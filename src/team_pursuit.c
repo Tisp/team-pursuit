@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     srand((unsigned)time(NULL));
 
     /* Inicia a simulacao */
-    simulator_start(track_distance, num_cyclists);
+    simulator_start(track_distance, num_cyclists, speed_type);
 
     return 0;
 }

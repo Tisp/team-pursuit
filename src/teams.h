@@ -15,7 +15,7 @@ typedef struct _teams {
     Cyclist **cyclists;
 } Teams;
 
-Teams *teams_new(int num_cyclists, int track_distance);
+Teams *teams_new(int num_cyclists, int track_distance, int init_speed);
 
 void teams_destroy(Teams *teams);
 

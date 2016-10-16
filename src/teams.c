@@ -9,7 +9,7 @@
     Cria uma equipe de ciclistas 
     Rece @num_cyclists que sera o numero de cada ciclista em cada equipe 
 */
-Teams *teams_new(int num_cyclists, int track_distance) {
+Teams *teams_new(int num_cyclists, int track_distance, int init_speed) {
 
     static Teams teams[2];
     int i, j, position;
@@ -25,7 +25,7 @@ Teams *teams_new(int num_cyclists, int track_distance) {
             /* Verifica que time pertence e seta posicao inicial */
             position = i == 0 ? 1 : track_distance / 2;
         
-            teams[i].cyclists[j] = cyclist_new(i, V1, position);
+            teams[i].cyclists[j] = cyclist_new(i, init_speed, position);
         }
     }
        

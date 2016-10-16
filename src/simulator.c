@@ -8,9 +8,9 @@ pthread_mutex_t mutex;
 int debug;
 
 /* Inicia a simulacao */
-void simulator_start(int track_distance, int num_cyclists) {
+void simulator_start(int track_distance, int num_cyclists, int speed_type) {
 
-    int i, j;
+    int i, j, new_speed;
 
     /* Times */
     Timer t_start,
@@ -24,8 +24,11 @@ void simulator_start(int track_distance, int num_cyclists) {
     /* Cria a pista */
     track_new(track_distance, num_cyclists);
 
+
+    int init_speed = speed_type == V_UNIFORM ? V2 : V1;
+
     /* Cria times */
-    Teams *teams = teams_new(num_cyclists, track_distance);
+    Teams *teams = teams_new(num_cyclists, track_distance, init_speed);
 
     /* Croa as threads */
     simulator_create_threads(teams);
@@ -42,15 +45,15 @@ void simulator_start(int track_distance, int num_cyclists) {
     /* Arruma as posicoes */
     simulator_update_positions(teams, track.size);
 
-     /* Inicia a prova */
-     start = TRUE;
+    /* Inicia a prova */
+    start = TRUE;
 
     while(TRUE) {
-       
+
         /* Debug ativado */
         if(debug) {
              get_time(&t_finish_d);
-             if((diff_time_s(t_finish, t_start) / 1000) > 0.06) {
+             if((diff_time_s(t_finish_d, t_start_d)) > 0.06) {
                   track_print_positions();
                   get_time(&t_start_d);
              }
@@ -91,11 +94,23 @@ void simulator_start(int track_distance, int num_cyclists) {
                         printf("Ciclista %d quebrou na volta %d e estava na posicao %d\n ", teams[i].cyclists[id_break]->id, laps[i], teams_get_position(teams, i, id_break));
                     } 
                 }
+                
+                /* Ve se precisa mudar a velocidade */
+                if(laps[i] > 1 && speed_type == V_RANDOM) {
+                    new_speed = simulator_change_speed(teams, i);
+                }
 
                 msleep(SLEEP / 4);
+                /* Atualiza as posicoes */
                 pthread_mutex_lock(&mutex);
-                simulator_update_positions(teams, track.size);
+                    simulator_update_positions(teams, track.size);
+
+                    /* Ve se precisa mudar a velocidade */
+                    if(laps[i] > 1 && speed_type == V_RANDOM) 
+                        teams_change_speed(teams, i, new_speed);
+                     
                 pthread_mutex_unlock(&mutex);
+                
            } 
        }
 
@@ -175,6 +190,26 @@ int simulator_break_cyclist(Teams *teams, int team_id) {
     }
 
     return -1;
+}
+
+
+
+/* Retorna o id do ciclista quebrado ou -1 caso nao houve quebra */
+int simulator_change_speed(Teams *teams, int team_id) {
+    
+    int total = teams[team_id].total_cyclists;
+    int speed = (randmax(2) == 0) ? V1 : V2;
+
+    /* Procuro um ciclista que nao esteja quebrado */
+    while(TRUE) {
+        int i = randmax(total);
+        /* procura um ciclista nao quebrado */
+        if(!teams[team_id].cyclists[i]->is_break) {
+            teams[team_id].cyclists[i]->speed = speed;
+            return speed;
+        }
+    }
+
 }
 
 
