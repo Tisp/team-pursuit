@@ -30,17 +30,23 @@ void simulator_start(int track_distance, int num_cyclists) {
 
     /* Inicia a largada */
     simulator_start_running(teams);
- 
+
+    /* Arruma as posicoes */
     simulator_update_positions(teams, track.size);
+
 
     while(laps[0] != MAX_LAPS && laps[1] != MAX_LAPS) {
        
-      /* Inicia a prova */
-      start = TRUE;
+        /* Inicia a prova */
+        start = TRUE;
 
-      simulator_update_positions(teams, track.size);
 
-     // track_print_positions();
+    //  // track_print_positions();
+    //     int j;
+    //     for(j = 0; j < teams[0].total_cyclists; j++) {
+    //         printf("%d ", teams[0].cyclists[j]->team_position);
+    //     }
+    //     printf("\n");
 
        for(i = 0; i < 2; i++) {
 
@@ -56,7 +62,7 @@ void simulator_start(int track_distance, int num_cyclists) {
                 get_time(&t_finish);
 
                 /* Imprime qual volta esta */
-                printf("Volta: %d\n", laps[i]);
+                printf("Volta: %d do time %d\n\n", laps[i], i);
                 
                 /* Imprime o corredor e o tempo que ele cruzou*/
                 printf("Ciclista %d cruzou a largada em %lf\n\n", 
@@ -75,13 +81,18 @@ void simulator_start(int track_distance, int num_cyclists) {
                     /* Quebrou */
                     if(id_break >= 0) {
                         printf("Ciclista %d quebrou na volta %d e estava na posicao %d\n ", teams[i].cyclists[id_break]->id, laps[i], teams_get_position(teams, i, id_break));
-                        msleep(SLEEP * 10);
                     } 
                 }
+
+                msleep(SLEEP / 4);
+                pthread_mutex_lock(&mutex);
+                simulator_update_positions(teams, track.size);
+                pthread_mutex_unlock(&mutex);
            } 
        }
     }
 
+     pthread_mutex_destroy(&mutex);
      //teams_destroy(teams);
 }
 
