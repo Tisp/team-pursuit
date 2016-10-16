@@ -5,13 +5,18 @@
 int start = FALSE;
 int laps[2] = {0,};
 pthread_mutex_t mutex;
+int debug;
 
 /* Inicia a simulacao */
 void simulator_start(int track_distance, int num_cyclists) {
 
     int i, j;
 
-    Timer t_start, t_finish;
+    /* Times */
+    Timer t_start,
+          t_finish,
+          t_start_d,
+          t_finish_d;
 
     /* Numero total de voltas de cada equipe*/
     int atual_laps[2] = {0,};
@@ -28,25 +33,28 @@ void simulator_start(int track_distance, int num_cyclists) {
     /* Guarda o instante de tempo inicial */
     get_time(&t_start);
 
+    /* Time para debug */
+    get_time(&t_start_d);
+
     /* Inicia a largada */
     simulator_start_running(teams);
 
     /* Arruma as posicoes */
     simulator_update_positions(teams, track.size);
 
+     /* Inicia a prova */
+     start = TRUE;
 
-    while(laps[0] != MAX_LAPS && laps[1] != MAX_LAPS) {
+    while(TRUE) {
        
-        /* Inicia a prova */
-        start = TRUE;
-
-
-    //  // track_print_positions();
-    //     int j;
-    //     for(j = 0; j < teams[0].total_cyclists; j++) {
-    //         printf("%d ", teams[0].cyclists[j]->team_position);
-    //     }
-    //     printf("\n");
+        /* Debug ativado */
+        if(debug) {
+             get_time(&t_finish_d);
+             if((diff_time_s(t_finish, t_start) / 1000) > 0.06) {
+                  track_print_positions();
+                  get_time(&t_start_d);
+             }
+        }
 
        for(i = 0; i < 2; i++) {
 
@@ -90,6 +98,18 @@ void simulator_start(int track_distance, int num_cyclists) {
                 pthread_mutex_unlock(&mutex);
            } 
        }
+
+        /* Terminou a corrida */
+        if(laps[0] == MAX_LAPS || laps[1] == MAX_LAPS) break;
+    }
+
+    /* Imprime quem venceu */
+    if(laps[0] == laps[1]) {
+        printf("As equipes empataram\n");
+    } else if(laps[0] > laps[1]) {
+        printf("A equipe 0 venceu\n");
+    } else {
+        printf("A equipe 1 venceu\n ");
     }
 
      pthread_mutex_destroy(&mutex);
