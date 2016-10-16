@@ -2,7 +2,7 @@ BIN_SIMULADOR = team_pursuit
 SRCS_SIMULADOR = $(wildcard src/*.c) $(wildcard src/*.c)
 
 INCS = -Isrc/
-LIBS = -ansi -pedantic -O2 -O3 -Wall -lm -lpthread -pthread 
+LIBS = -ansi -pedantic -O2 -O3 -Wall -lm -lrt -lpthread -pthread 
 
 CFLAGS = $(INCS) -c -g
 LDFLAGS = $(LIBS)

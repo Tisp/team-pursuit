@@ -2,7 +2,7 @@
 
 /* Variavel global para criacao de ids dos ciclistas */
 int serial_cyclist = 0;
-
+int laps[2];
 int start;
 Track track;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -15,7 +15,9 @@ Cyclist *cyclist_new(int id_team, int speed, int position) {
     cyclist->team_id = id_team;
     cyclist->speed = speed;
     cyclist->position = position;
+    cyclist->team_position = 0;
     cyclist->is_break = FALSE;
+    cyclist->is_last = FALSE;
     cyclist->start_position = position;
 
     return cyclist;
@@ -31,6 +33,7 @@ void cyclist_destroy(Cyclist *cyclist) {
 void *cyclist_run(void *args) {
 
     Cyclist *cyclist = args;
+    int i = 0;
 
     while(TRUE) {
 
@@ -43,7 +46,7 @@ void *cyclist_run(void *args) {
             return NULL;
         }
 
-        int i = 0;
+        int runned = FALSE;
 
         /* Caso andou apenas meio metro, dormir metade */
         if(cyclist->speed == V1) msleep(SLEEP / 2);
@@ -51,29 +54,40 @@ void *cyclist_run(void *args) {
         /* Calcula nova posicao */
         int new_position = (cyclist->position + 1) % track.size;
     
-        /* Posicao vazia */
-        if(track.position[new_position].stretch[i] == -1) {
-            
+        while(!runned) {
+    
+            /* Posicao vazia */
+            if(track.position[new_position].stretch[i] == -1) {
+                           
+                 /* SECAO CRITICA */
+                pthread_mutex_lock(&mutex);
+    
+                    /* Adiciona a posicao nova */
+                    track.position[new_position].stretch[i] = cyclist->id;
 
-            /* SECAO CRITICA */
-            pthread_mutex_lock(&mutex);
+                    /* Remove a posicao antiga */
+                    track.position[cyclist->position].stretch[i] = -1;
 
-                /* Adiciona a posicao nova */
-                track.position[new_position].stretch[i] = cyclist->id;
+                    cyclist->position = new_position;  
 
-                /* Remove a posicao antiga */
-                track.position[cyclist->position].stretch[i] = -1;
+                    /* Completou uma volta */
+                    if(cyclist->position == cyclist->start_position && cyclist->is_last) {
+                        laps[cyclist->team_id]++;
+                    } 
+         
+                /* FIM DA SESSAO CRITICA  */
+                pthread_mutex_unlock(&mutex);
 
-                cyclist->position = new_position;    
+                runned = TRUE;
 
-            /* FIM DA SESSAO CRITICA  */
-            pthread_mutex_unlock(&mutex);
-            
-        } 
+                
+            } 
+        }
+  
 
         /* Se a velocidade for a menor dormir apenas metade, pois ja dormiu */
         cyclist->speed == V1 ? msleep(SLEEP / 2) : msleep(SLEEP);        
 
     }
-
+ 
 }

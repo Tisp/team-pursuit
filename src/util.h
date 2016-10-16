@@ -23,6 +23,9 @@ void help(const char *program_name);
 
 void msleep(int ms);
 
+float diff_time_s (Timer finish, Timer start);
+
+void get_time(Timer *t);
 
 int randmax(int max);
 

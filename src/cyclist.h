@@ -16,7 +16,9 @@ typedef struct _cyclist {
     int speed; /* Sua velocidade */
     int is_break; /* Esta quebrado */
     int position; /* Guarda a posicao */
+    int team_position; /* Posicao relativa no time*/
     int start_position; /*Posicao inicial*/
+    int is_last; /* Guarda se o ciclista e o ultimo*/
     pthread_t thread; /* thread */
 } Cyclist;
 

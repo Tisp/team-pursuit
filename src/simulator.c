@@ -3,15 +3,18 @@
 
 
 int start = FALSE;
-
+int laps[2] = {0,};
+pthread_mutex_t mutex;
 
 /* Inicia a simulacao */
 void simulator_start(int track_distance, int num_cyclists) {
 
-    int i, j, err;
+    int i, j;
+
+    Timer t_start, t_finish;
 
     /* Numero total de voltas de cada equipe*/
-    int laps[2] = {0,};
+    int atual_laps[2] = {0,};
 
     /* Cria a pista */
     track_new(track_distance, num_cyclists);
@@ -19,46 +22,53 @@ void simulator_start(int track_distance, int num_cyclists) {
     /* Cria times */
     Teams *teams = teams_new(num_cyclists, track_distance);
 
+    /* Croa as threads */
+    simulator_create_threads(teams);
 
-    /* Cria as threads */
-    for(i = 0; i < 2; i++) {
-        for(j = 0; j < teams[i].total_cyclists; j++)
-            err = pthread_create(&teams[i].cyclists[j]->thread, 
-                                NULL,
-                                cyclist_run,
-                                (void *) teams[i].cyclists[j]
-                                );
-            
-            /* erro ao criar a thread */
-            if(err) {
-                 printf("Erro ao criar thread do ciclista %d", teams[i].cyclists[j]->id);
-                 exit(1);
-             }
-    }
+    /* Guarda o instante de tempo inicial */
+    get_time(&t_start);
 
-
+    /* Inicia a largada */
     simulator_start_running(teams);
+ 
+    simulator_update_positions(teams, track.size);
 
     while(laps[0] != MAX_LAPS && laps[1] != MAX_LAPS) {
        
-       start = TRUE;
-       //msleep(SLEEP * 10);
-    //   //     teams_print(teams);
-       msleep(SLEEP);
-       track_print_positions();
+      /* Inicia a prova */
+      start = TRUE;
 
+      simulator_update_positions(teams, track.size);
 
+     // track_print_positions();
 
        for(i = 0; i < 2; i++) {
-           int last = teams_get_last(teams, i, track.size);
 
-           if(teams[i].cyclists[last]->position == teams[i].cyclists[last]->start_position) {
+           /* Cruzou a largada */
+           if(atual_laps[i] != laps[i]) {
+
+                /* Atualiza o numero da volta */
+                atual_laps[i] = laps[i];
                 
-                /* Ultimo cruzou a chegada */
-                laps[i]++;
+                int last = teams_get_last(teams, i);     
                 
+                /* Pega o tempo da cruzada */
+                get_time(&t_finish);
+
+                /* Imprime qual volta esta */
+                printf("Volta: %d\n", laps[i]);
+                
+                /* Imprime o corredor e o tempo que ele cruzou*/
+                printf("Ciclista %d cruzou a largada em %lf\n\n", 
+                    teams[i].cyclists[last]->id, 
+                    diff_time_s(t_finish, t_start)
+                );
+
+                /* Imprime os dados dos ciclistas */
+                teams_print(teams, i);
+
                 /* Sorteia um ciclista para quebrar  */
-               // if((laps[i] % 2) == 1) {
+               if((laps[i] % 4) == 3) {
                     
                     int id_break = simulator_break_cyclist(teams, i);
                     
@@ -67,13 +77,9 @@ void simulator_start(int track_distance, int num_cyclists) {
                         printf("Ciclista %d quebrou na volta %d e estava na posicao %d\n ", teams[i].cyclists[id_break]->id, laps[i], teams_get_position(teams, i, id_break));
                         msleep(SLEEP * 10);
                     } 
-                //}
+                }
            } 
        }
-
-       printf("Volta Time 1: %d \n", laps[0]);
-       printf("Volta Time 2: %d \n", laps[1]);
-       
     }
 
      //teams_destroy(teams);
@@ -100,7 +106,7 @@ void simulator_start_running(Teams *teams) {
             int r = randmax(total);
 
             if(!raf[r]) {
-                 teams[i].cyclists[r]->position += total;
+                 teams[i].cyclists[r]->position += s;
                  raf[r] = TRUE;
                  s--;
             }
@@ -140,3 +146,44 @@ int simulator_break_cyclist(Teams *teams, int team_id) {
     return -1;
 }
 
+
+void simulator_create_threads(Teams *teams) {
+    
+    int i, j, err;
+    
+    /* Cria as threads */
+    for(i = 0; i < 2; i++) {
+        for(j = 0; j < teams[i].total_cyclists; j++)
+            err = pthread_create(&teams[i].cyclists[j]->thread, 
+                                NULL,
+                                cyclist_run,
+                                (void *) teams[i].cyclists[j]
+                                );
+            
+            /* erro ao criar a thread */
+            if(err) {
+                 printf("Erro ao criar thread do ciclista %d", teams[i].cyclists[j]->id);
+                 exit(1);
+             }
+    }
+}
+
+
+void simulator_update_positions(Teams *teams, int track_size) {
+
+    int i, j;
+
+   // pthread_mutex_lock(&mutex);
+    for(i = 0; i < 2; i++) {
+            for(j = 0; j < teams[i].total_cyclists; j++) {
+            int position = teams_get_position(teams, i, j);
+            teams[i].cyclists[j]->team_position = position;
+            teams[i].cyclists[j]->is_last = FALSE;
+        }
+
+         int last = teams_get_last(teams, i);
+         teams[i].cyclists[last]->is_last = TRUE;
+    }
+  // pthread_mutex_unlock(&mutex);
+
+}

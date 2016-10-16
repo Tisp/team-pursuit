@@ -1,6 +1,4 @@
-
 #include "util.h"
-
 
 void help(const char *program_name) {
     printf("\n### Team Pursuit Simulator ### \n\n");
@@ -17,7 +15,15 @@ void msleep(int ms) {
     usleep(ms * 1000);
 } 
 
-
+float diff_time_s (Timer finish, Timer start) {
+    float elapsed = (finish.tv_sec - start.tv_sec);
+    elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+    return elapsed;
+}
+ 
+void get_time(Timer *t) {
+     clock_gettime(CLOCK_MONOTONIC, t);
+}
 
 int randmax(int max) {
     /* Gera um numero aleatorio de o a max */

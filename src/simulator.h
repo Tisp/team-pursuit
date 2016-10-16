@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <time.h>
 
 #include "config.h"
 #include "util.h"
@@ -16,5 +17,10 @@ void simulator_start(int track_distance, int num_cyclists);
 void simulator_start_running(Teams *teams);
 
 int simulator_break_cyclist(Teams *teams, int team_id);
+
+void simulator_create_threads(Teams *teams);
+
+void simulator_update_positions(Teams *teams, int track_size);
+
 
 #endif
