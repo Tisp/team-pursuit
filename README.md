@@ -1,7 +1,5 @@
 # Team Pursuit
 
-###### Trabalho da matéria de Sistemas Operacionais IME-USP
-
 ###1 .Problema
 
 Uma das varias modalidades de ciclismo realizada em velódromos é a [perseguição por equipe](https://en.wikipedia.org/wiki/Team_pursuit). O objetivo deste EP sera simular essa modalidade. Na perseguição por equipe, cada equipe, contendo 4 ciclistas, inicia a prova em lados opostos do velodromo. Os 4 ciclistas de cada equipe ficam lado-a-lado na largada e logo depois, para obter uma vantagem aerodinamica, ficam enfileirados com mudanças regulares das posições de modo que o primeiro ciclista mude de tempos em tempos e os demais, que ficam atras, possam economizar energia. A equipe que vence a prova e aquela cujo terceiro ciclista, após 4Km (16 voltas num velodromo de 250 metros) cruzar primeiro a linha de chegada (que e relativa a linha de largada da equipe). A prova tambem termina se o terceiro ciclista de uma equipe ultrapassar o terceiro ciclista da outra equipe.
