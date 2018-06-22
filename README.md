@@ -1,12 +1,12 @@
 # Team Pursuit
 
-###1 .Problema
+### 1 Problema
 
 Uma das varias modalidades de ciclismo realizada em velódromos é a [perseguição por equipe](https://en.wikipedia.org/wiki/Team_pursuit). O objetivo deste EP sera simular essa modalidade. Na perseguição por equipe, cada equipe, contendo 4 ciclistas, inicia a prova em lados opostos do velodromo. Os 4 ciclistas de cada equipe ficam lado-a-lado na largada e logo depois, para obter uma vantagem aerodinamica, ficam enfileirados com mudanças regulares das posições de modo que o primeiro ciclista mude de tempos em tempos e os demais, que ficam atras, possam economizar energia. A equipe que vence a prova e aquela cujo terceiro ciclista, após 4Km (16 voltas num velodromo de 250 metros) cruzar primeiro a linha de chegada (que e relativa a linha de largada da equipe). A prova tambem termina se o terceiro ciclista de uma equipe ultrapassar o terceiro ciclista da outra equipe.
 
 A sua tarefa neste EP e simular a corrida. A simulacao deve considerar que a corrida  e em um velodromo com d metros e que n ciclistas comecam a prova em cada equipe (d > 249 e n > 4). A qualquer momento, com excec¸ao do instante da largada, no maximo, apenas 2 ciclistas podem estar lado a lado em cada ponto da pista, independente das suas equipes. Considere que cada ciclista ocupa exatamente 1 metro da pista e que a quantidade de ciclistas de cada equipe e no maximo ⌈d/4⌉. A quantidade de voltas sera sempre 16 independente do tamanho do velodromo. 
 
-###2 .Requisitos
+### 2 Requisitos
  
 Seu simulador deve criar 2 × n threads “ciclista”. Seu codigo tera duas opcoes de execucao. Na primeira opcao todos os ciclistas conseguem pedalar exatamente na mesma  velocidade de 60Km/h (1m a cada 60ms) durante toda a prova. Na segunda opcao, todos os ciclistas fazem a primeira volta a 30Km/h mas a partir da segunda volta cada um dos ciclistas define suas velocidades aleatoriamente, para realizar a volta seguinte, como sendo 30 ou 60Km/h, com 50% de chance de escolher 60Km/h e 50% de chance de escolher 30Km/h. Se a velocidade sorteada para um ciclista for de 30Km/h, todos os ciclistas companheiros de equipe que estiverem atras dele, naquela volta, devem pedalar a 30Km/h, independente do valor que foi sorteado para eles. Desconsidere a acelerac¸ao necessaria para mudar a velocidade. Na volta seguinte, se o ciclista lento continuar lento, ele pode ser ultrapassado pelos seus companheiros de equipe caso haja algum ciclista atras dele com velocidade de 60Km/h. 
 
